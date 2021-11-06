@@ -75,21 +75,9 @@ WHERE ps.Bus_Type = 'Sitting'
 AND ps.DISTANCE >= 1000;
 
 /* 8) What will be the Sitting and Sleeper bus charge for Pallavi to travel from Bangalore to Panaji? */
-SELECT Price AS PriceForSleeper
-FROM PASSENGER ps 
-JOIN PRICE pr ON ps.Distance = pr.Distance AND ps.Bus_Type = pr.Bus_Type
-WHERE Boarding_City = 'Panaji'
-AND Destination_City = 'Bengaluru'
-AND Bus_Type = 'Sleeper';
-
-SELECT Price AS PriceForSitting
-FROM Price
-WHERE Distance =
-(SELECT ps.distance
-FROM PASSENGER ps JOIN PRICE pr ON ps.distance = pr.distance AND ps.bus_type = pr.bus_type
-WHERE Boarding_City='Panaji' 
-AND Destination_City='Bengaluru')
-AND Bus_Type='Sitting';
+SELECT ps.Passenger_Name, pr.Bus_Type, pr.Price
+FROM PASSENGER ps INNER JOIN PRICE pr ON ps.Distance = pr.Distance AND ps.Bus_Type = pr.Bus_Type
+WHERE ps.Passenger_Name = 'Pallavi' AND ps.Bus_Type IN ('Sleeper', 'Sitting');
 
 /* 9) List the distances from the "Passenger" table which are unique (non-repeated distances) in descending order. */
 SELECT Distance 
